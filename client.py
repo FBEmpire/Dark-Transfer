@@ -75,7 +75,7 @@ def upload_image(file_path):
        with open(file_path, 'rb') as img_file:
            base64_data = base64.b64encode(img_file.read()).decode('utf-8')
        
-       response = requests.post('http://fbe.leyixgame.ru:5000/upload', json={'image': base64_data})
+       response = requests.post('http://sql.leyixgame.ru:5000/upload', json={'image': base64_data})
        
        try:
            print(response.json())
@@ -83,10 +83,9 @@ def upload_image(file_path):
            print("Response content is not valid JSON:", response.text)
 
 def download_images(table_name):
-    response = requests.post('http://fbe.leyixgame.ru:5000/download', json={'table_name': table_name})
+    response = requests.post('http://sql.leyixgame.ru:5000/download', json={'table_name': table_name})
 
     if response.status_code == 200:
-        # Сохраняем файл на клиенте
         filename = response.headers.get('Content-Disposition').split('filename=')[1].strip('"')
         with open(filename, 'wb') as f:
             f.write(response.content)
